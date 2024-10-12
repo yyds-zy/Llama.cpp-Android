@@ -77,26 +77,26 @@ class MainActivity(
                 Uri.parse(""),
                 File(extFilesDir, "Qwen-7.6B-Q4_K_M.gguf"),
             ),
-            Downloadable(
-                "MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf",
-                Uri.parse(""),
-                File(extFilesDir, "MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf"),
-            ),
-            Downloadable(
-                "llama3.1-Q4_K_M-kvOverload.gguf",
-                Uri.parse(""),
-                File(extFilesDir, "llama3.1-Q4_K_M-kvOverload.gguf"),
-            ),
-            Downloadable(
-                "phi-2.Q4_K_M.gguf",
-                Uri.parse(""),
-                File(extFilesDir, "phi-2.Q4_K_M.gguf"),
-            ),
-            Downloadable(
-                "qwen2.5-0.5b-instruct-q4_k_m.gguf",
-                Uri.parse(""),
-                File(extFilesDir, "qwen2.5-0.5b-instruct-q4_k_m.gguf"),
-            ),
+//            Downloadable(
+//                "MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf",
+//                Uri.parse(""),
+//                File(extFilesDir, "MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf"),
+//            ),
+//            Downloadable(
+//                "llama3.1-Q4_K_M-kvOverload.gguf",
+//                Uri.parse(""),
+//                File(extFilesDir, "llama3.1-Q4_K_M-kvOverload.gguf"),
+//            ),
+//            Downloadable(
+//                "phi-2.Q4_K_M.gguf",
+//                Uri.parse(""),
+//                File(extFilesDir, "phi-2.Q4_K_M.gguf"),
+//            ),
+//            Downloadable(
+//                "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+//                Uri.parse(""),
+//                File(extFilesDir, "qwen2.5-0.5b-instruct-q4_k_m.gguf"),
+//            ),
         )
 
         setContent {

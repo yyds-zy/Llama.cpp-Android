@@ -2,13 +2,11 @@
 # documentation: https://d.android.com/studio/projects/add-native-code.html.
 # For more examples on how to use CMake, see https://github.com/android/ndk-samples.
 
-# Sets the minimum CMake version required for this project.
+# 指定了这个项目需要的 CMake 的最低版本是 3.22.1。这意味着项目使用了在 3.22.1 版本中引入的一些特性，并且需要至少这个版本的 CMake 来构建。
 cmake_minimum_required(VERSION 3.22.1)
 
-# Declares the project name. The project name can be accessed via ${ PROJECT_NAME},
-# Since this is the top level CMakeLists.txt, the project name is also accessible
-# with ${CMAKE_PROJECT_NAME} (both CMake variables are in-sync within the top level
-# build script scope).
+# project("llama-android") 定义了项目的名称为 "llama-android"。
+# 这会设置 CMAKE_PROJECT_NAME 变量为 "llama-android"
 project("llama-android")
 
 #include(FetchContent)
@@ -32,6 +30,8 @@ project("llama-android")
 #
 
 #load local llama.cpp
+# 将 CMake 的构建目录指向了相对于当前 CMakeLists.txt 文件的相对路径下的 build-llama 目录。
+# 这意味着 CMake 会在指定的目录中查找 CMakeLists.txt 文件，并使用它来构建项目。这通常用于构建第三方库或子项目。
 add_subdirectory(../../../../../../ build-llama)
 
 # In order to load a library into your app from Java/Kotlin, you must call
@@ -45,6 +45,8 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
 # Specifies libraries CMake should link to your target library. You
 # can link libraries from various origins, such as libraries defined in this
 # build script, prebuilt third-party libraries, or Android system libraries.
+# build-llama 目录中有一个 CMakeLists.txt 文件，它负责定义如何构建 llama 和 common 库。
+# 此外，android 和 log 库是 Android NDK 中的标准库，通常用于 Android 应用开发。
 target_link_libraries(${CMAKE_PROJECT_NAME}
         # List libraries link to the target library
         llama

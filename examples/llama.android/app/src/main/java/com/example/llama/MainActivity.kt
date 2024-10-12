@@ -71,11 +71,12 @@ class MainActivity(
         val extFilesDir = getExternalFilesDir(null)
 ///storage/emulated/0/Android/data/com.example.llama/files/Qwen-7.6B-Q4_K_M.gguf
         //MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf
+        ///storage/emulated/0/Android/data/com.example.llama/files/llama_3.1_0.2_4-30.gguf
         val models = listOf(
             Downloadable(
-                "Qwen-7.6B-Q4_K_M.gguf",
+                "llama_3.1_0.2_4-30.gguf",
                 Uri.parse(""),
-                File(extFilesDir, "Qwen-7.6B-Q4_K_M.gguf"),
+                File(extFilesDir, "llama_3.1_0.2_4-30.gguf"),
             ),
 //            Downloadable(
 //                "MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf",

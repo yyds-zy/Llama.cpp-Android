@@ -317,16 +317,21 @@ ifdef GGML_SCHED_MAX_COPIES
 	MK_CPPFLAGS += -DGGML_SCHED_MAX_COPIES=$(GGML_SCHED_MAX_COPIES)
 endif
 
+
+LLAMA_DEBUG := 1   #jxie
+
 ifdef LLAMA_DEBUG
-	MK_CFLAGS    += -O0 -g
-	MK_CXXFLAGS  += -O0 -g
-	MK_LDFLAGS   += -g
-	MK_NVCCFLAGS += -O0 -g
+	 
+	MK_CFLAGS    += -O0 -g  -ggdb
+	MK_CXXFLAGS  += -O0 -g  -ggdb
+	MK_LDFLAGS   += -g -ggdb
+	MK_NVCCFLAGS += -O0 -g  -ggdb
 
 	ifeq ($(UNAME_S),Linux)
 		MK_CPPFLAGS += -D_GLIBCXX_ASSERTIONS
 	endif
 else
+	 
 	MK_CPPFLAGS   += -DNDEBUG
 	MK_CFLAGS     += -O3 -g
 	MK_CXXFLAGS   += -O3 -g

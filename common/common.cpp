@@ -1896,6 +1896,9 @@ void yaml_dump_non_result_info(FILE * stream, const gpt_params & params, const l
             fprintf(stream, "  - %s: %f\n", la.path.c_str(), la.scale);
         }
     }
+
+
+    
     fprintf(stream, "lora_init_without_apply: %s # default: false\n", params.lora_init_without_apply ? "true" : "false");
     fprintf(stream, "main_gpu: %d # default: 0\n", params.main_gpu);
     fprintf(stream, "min_keep: %d # default: 0 (disabled)\n", sparams.min_keep);

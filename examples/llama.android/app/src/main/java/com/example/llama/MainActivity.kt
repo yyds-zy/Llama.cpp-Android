@@ -69,22 +69,33 @@ class MainActivity(
         viewModel.log("Downloads directory: ${getExternalFilesDir(null)}")
 
         val extFilesDir = getExternalFilesDir(null)
-
+///storage/emulated/0/Android/data/com.example.llama/files/Qwen-7.6B-Q4_K_M.gguf
+        //MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf
         val models = listOf(
             Downloadable(
-                "Phi-2 7B (Q4_0, 1.6 GiB)",
-                Uri.parse("https://huggingface.co/ggml-org/models/resolve/main/phi-2/ggml-model-q4_0.gguf?download=true"),
-                File(extFilesDir, "phi-2-q4_0.gguf"),
+                "Qwen-7.6B-Q4_K_M.gguf",
+                Uri.parse(""),
+                File(extFilesDir, "Qwen-7.6B-Q4_K_M.gguf"),
             ),
             Downloadable(
-                "TinyLlama 1.1B (f16, 2.2 GiB)",
-                Uri.parse("https://huggingface.co/ggml-org/models/resolve/main/tinyllama-1.1b/ggml-model-f16.gguf?download=true"),
-                File(extFilesDir, "tinyllama-1.1-f16.gguf"),
+                "MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf",
+                Uri.parse(""),
+                File(extFilesDir, "MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf"),
             ),
             Downloadable(
-                "Phi 2 DPO (Q3_K_M, 1.48 GiB)",
-                Uri.parse("https://huggingface.co/TheBloke/phi-2-dpo-GGUF/resolve/main/phi-2-dpo.Q3_K_M.gguf?download=true"),
-                File(extFilesDir, "phi-2-dpo.Q3_K_M.gguf")
+                "llama3.1-Q4_K_M-kvOverload.gguf",
+                Uri.parse(""),
+                File(extFilesDir, "llama3.1-Q4_K_M-kvOverload.gguf"),
+            ),
+            Downloadable(
+                "phi-2.Q4_K_M.gguf",
+                Uri.parse(""),
+                File(extFilesDir, "phi-2.Q4_K_M.gguf"),
+            ),
+            Downloadable(
+                "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+                Uri.parse(""),
+                File(extFilesDir, "qwen2.5-0.5b-instruct-q4_k_m.gguf"),
             ),
         )
 

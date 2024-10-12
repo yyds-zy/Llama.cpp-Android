@@ -91,7 +91,7 @@ class LLamaAndroid {
         }
     }
 
-    suspend fun load(pathToModel: String) {
+    suspend fun load(pathToModel: String, function: () -> Unit) {
         withContext(runLoop) {
             when (threadLocalState.get()) {
                 is State.Idle -> {

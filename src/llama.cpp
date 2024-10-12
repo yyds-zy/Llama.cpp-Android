@@ -4807,7 +4807,7 @@ struct llama_model_loader {
         }
 
         {
-            
+
             bool is_ok = true;
             for (size_t i = 0; i < GGML_MAX_DIMS; ++i) {
                 if ((i < ne.size() && ne[i] != cur->ne[i]) || (i >= ne.size() && cur->ne[i] != 1)) {
@@ -5430,10 +5430,10 @@ static void llm_load_hparams(
                         default: model.type = e_model::MODEL_UNKNOWN;
                     }
                 }
-            } 
-            
+            }
+
             // caoty
-            {           
+            {
                 std::unordered_map<std::string, int> name_to_index;
                 for (int i = 0; i < (int)ml.weights.size(); i++) {
                     std::string layer_name = ml.weights[i].tensor->name;
@@ -5463,7 +5463,7 @@ static void llm_load_hparams(
             //     model.hparams.n_head_kv_arr[i] = 3072 / 128 / 4;
             //     model.hparams.n_ff_arr[i] = 10321;
             // }
-            
+
             break;
         case LLM_ARCH_LLAMA:
             {
@@ -5661,7 +5661,7 @@ static void llm_load_hparams(
                 }
 
                 // caoty. key modification
-                {           
+                {
                     std::unordered_map<std::string, int> name_to_index;
                     for (int i = 0; i < (int)ml.weights.size(); i++) {
                         std::string layer_name = ml.weights[i].tensor->name;
@@ -18810,11 +18810,28 @@ struct llama_context * llama_new_context_with_model(
     }
 
     LLAMA_LOG_INFO("%s: n_ctx      = %u\n",     __func__, cparams.n_ctx);
+    LLAMA_LOG_INFO("%s: n_seq_max  = %u\n",     __func__, cparams.n_seq_max);
     LLAMA_LOG_INFO("%s: n_batch    = %u\n",     __func__, cparams.n_batch);
     LLAMA_LOG_INFO("%s: n_ubatch   = %u\n",     __func__, cparams.n_ubatch);
-    LLAMA_LOG_INFO("%s: flash_attn = %d\n",     __func__, cparams.flash_attn);
+    LLAMA_LOG_INFO("%s: n_threads   = %u\n",     __func__, cparams.n_threads);
+    LLAMA_LOG_INFO("%s: n_threads_batch   = %d\n",     __func__, cparams.n_threads_batch);
+    LLAMA_LOG_INFO("%s: logits_all   = %u\n",     __func__, params.logits_all);
+    LLAMA_LOG_INFO("%s: embeddings   = %u\n",     __func__, cparams.embeddings);
+    LLAMA_LOG_INFO("%s: rope_scaling_type   = %f\n",     __func__, cparams.yarn_ext_factor);
     LLAMA_LOG_INFO("%s: freq_base  = %.1f\n",   __func__, cparams.rope_freq_base);
     LLAMA_LOG_INFO("%s: freq_scale = %g\n",     __func__, cparams.rope_freq_scale);
+    LLAMA_LOG_INFO("%s: yarn_ext_factor   = %f\n",     __func__, cparams.yarn_ext_factor);
+    LLAMA_LOG_INFO("%s: yarn_attn_factor   = %f\n",     __func__, cparams.yarn_attn_factor);
+    LLAMA_LOG_INFO("%s: yarn_beta_fast   = %f\n",     __func__, cparams.yarn_beta_fast);
+    LLAMA_LOG_INFO("%s: yarn_beta_slow   = %f\n",     __func__, cparams.yarn_beta_slow);
+    LLAMA_LOG_INFO("%s: yarn_orig_ctx   = %u\n",     __func__, cparams.n_ctx_orig_yarn);
+    LLAMA_LOG_INFO("%s: pooling_type   = %u\n",     __func__, cparams.pooling_type);
+    LLAMA_LOG_INFO("%s: attention_type   = %d\n",     __func__, cparams.causal_attn);
+    LLAMA_LOG_INFO("%s: defrag_thold   = %f\n",     __func__, cparams.defrag_thold);
+    LLAMA_LOG_INFO("%s: cb_eval   = %d\n",     __func__, cparams.cb_eval);
+    LLAMA_LOG_INFO("%s: cb_eval_user_data   = %d\n",     __func__, cparams.cb_eval_user_data);
+    LLAMA_LOG_INFO("%s: offload_kqv   = %d\n",     __func__, cparams.offload_kqv);
+    LLAMA_LOG_INFO("%s: flash_attn   = %d\n",     __func__, cparams.flash_attn);
 
     ctx->abort_callback      = params.abort_callback;
     ctx->abort_callback_data = params.abort_callback_data;
@@ -18827,6 +18844,9 @@ struct llama_context * llama_new_context_with_model(
     uint32_t kv_size = cparams.n_ctx;
     ggml_type type_k = params.type_k;
     ggml_type type_v = params.type_v;
+
+    LLAMA_LOG_INFO("%s: type_k   = %d\n",     __func__, params.type_k);
+    LLAMA_LOG_INFO("%s: type_v   = %d\n",     __func__, params.type_v);
 
     // Mamba only needs a constant number of KV cache cells per sequence
     if (llama_model_is_recurrent(model)) {

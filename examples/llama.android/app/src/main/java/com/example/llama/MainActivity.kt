@@ -73,10 +73,15 @@ class MainActivity(
         //MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf
         ///storage/emulated/0/Android/data/com.example.llama/files/llama_3.1_0.2_4-30.gguf
         val models = listOf(
+//            Downloadable(
+//                "llama_3.1_0.2_4-30.gguf",
+//                Uri.parse(""),
+//                File(extFilesDir, "llama_3.1_0.2_4-30.gguf"),
+//            ),
             Downloadable(
-                "llama_3.1_0.2_4-30.gguf",
+                "llama_3.1_0.3_4-30.gguf",
                 Uri.parse(""),
-                File(extFilesDir, "llama_3.1_0.2_4-30.gguf"),
+                File(extFilesDir, "llama_3.1_0.3_4-30.gguf"),
             ),
 //            Downloadable(
 //                "MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf",

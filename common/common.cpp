@@ -920,6 +920,32 @@ struct llama_context_params llama_context_params_from_gpt_params(const gpt_param
     cparams.type_k = kv_cache_type_from_str(params.cache_type_k);
     cparams.type_v = kv_cache_type_from_str(params.cache_type_v);
 
+    // printf("cparams.n_ctx=%d\n",cparams.n_ctx);
+    // printf("cparams.n_seq_max=%d\n",cparams.n_seq_max);
+    // printf("cparams.n_batch=%d\n",cparams.n_batch);
+    // printf("cparams.n_ubatch=%d\n",cparams.n_ubatch);
+    // printf("cparams.n_threads=%d\n",cparams.n_threads);
+    // printf("cparams.n_threads_batch=%d\n",cparams.n_threads_batch);
+    // printf("cparams.logits_all=%d\n",cparams.logits_all);
+    // printf("cparams.embeddings=%d\n",cparams.embeddings);
+    // printf("cparams.rope_scaling_type=%d\n",cparams.rope_scaling_type);
+    // printf("cparams.rope_freq_base=%d\n",cparams.rope_freq_base);
+    // printf("cparams.rope_freq_scale=%d\n",cparams.rope_freq_scale);
+    // printf("cparams.yarn_ext_factor=%d\n",cparams.yarn_ext_factor);
+    // printf("cparams.yarn_attn_factor=%d\n",cparams.yarn_attn_factor);
+    // printf("cparams.yarn_beta_fast=%d\n",cparams.yarn_beta_fast);
+    // printf("cparams.yarn_beta_slow=%d\n",cparams.yarn_beta_slow);
+    // printf("cparams.yarn_orig_ctx=%d\n",cparams.yarn_orig_ctx);
+    // printf("cparams.pooling_type=%d\n",cparams.pooling_type);
+    // printf("cparams.attention_type=%d\n",cparams.attention_type);
+    // printf("cparams.defrag_thold=%d\n",cparams.defrag_thold);
+    // printf("cparams.cb_eval=%d\n",cparams.cb_eval);
+    // printf("cparams.cb_eval_user_data=%d\n",cparams.cb_eval_user_data);
+    // printf("cparams.offload_kqv=%d\n",cparams.offload_kqv);
+    // printf("cparams.flash_attn=%d\n",cparams.flash_attn);
+    // printf("cparams.type_k=%d\n",cparams.type_k);
+    // printf("cparams.type_v=%d\n",cparams.type_v);
+
     return cparams;
 }
 

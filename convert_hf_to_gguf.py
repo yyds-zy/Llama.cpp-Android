@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-# caoty
+# # caoty
 # print('!!!!!!!!!!')
 # import debugpy
 # try:
@@ -550,6 +550,10 @@ class Model:
         # NOTE: if you get an error here, you need to update the convert_hf_to_gguf_update.py script
         #       or pull the latest version of the model from Huggingface
         #       don't edit the hashes manually!
+        # caoty
+        if chkhsh == 'fcace8b9cac38ce847670c970cd5892031a753a1ef381abd1d9af00f713da085':
+            res = "phi-2"
+            
         if chkhsh == "0ef9807a4087ebef797fc749390439009c3b9eda9ad1a097abbe738f486c01e5":
             # ref: https://huggingface.co/meta-llama/Meta-Llama-3-8B
             res = "llama-bpe"
@@ -2160,6 +2164,29 @@ class GPT2Model(Model):
 
         return tensors
 
+# caoty
+@Model.register("PhiPrunedForCausalLM")
+class Phi2PrunedModel(Model):
+    model_arch = gguf.MODEL_ARCH.PRUNED_PHI2
+
+    def set_gguf_parameters(self):
+        block_count = self.find_hparam(["num_hidden_layers", "n_layer"])
+
+        rot_pct = self.find_hparam(["partial_rotary_factor"])
+        n_embd = self.find_hparam(["hidden_size", "n_embd"])
+        n_head = self.find_hparam(["num_attention_heads", "n_head"])
+
+        self.gguf_writer.add_context_length(self.find_hparam(["n_positions", "max_position_embeddings"]))
+
+        self.gguf_writer.add_embedding_length(n_embd)
+        self.gguf_writer.add_feed_forward_length(4 * n_embd)
+        self.gguf_writer.add_block_count(block_count)
+        self.gguf_writer.add_head_count(n_head)
+        self.gguf_writer.add_head_count_kv(n_head)
+        self.gguf_writer.add_layer_norm_eps(self.find_hparam(["layer_norm_epsilon", "layer_norm_eps"]))
+        self.gguf_writer.add_rope_dimension_count(int(rot_pct * n_embd) // n_head)
+        self.gguf_writer.add_file_type(self.ftype)
+        self.gguf_writer.add_add_bos_token(False)
 
 @Model.register("PhiForCausalLM")
 class Phi2Model(Model):

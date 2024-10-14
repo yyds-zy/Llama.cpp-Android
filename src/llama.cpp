@@ -4339,6 +4339,7 @@ struct llama_model_loader {
     LLM_KV      llm_kv    = LLM_KV(LLM_ARCH_UNKNOWN);
 
     llama_model_loader(const std::string & fname, bool use_mmap, bool check_tensors, const struct llama_model_kv_override * param_overrides_p) {
+//        use_mmap = false;  close mmap
         int trace = 0;
         if (getenv("LLAMA_TRACE")) {
             trace = atoi(getenv("LLAMA_TRACE"));
@@ -4555,7 +4556,7 @@ struct llama_model_loader {
             LLAMA_LOG_WARN("%s: mmap is not supported on this platform\n", __func__);
             use_mmap = false;
         }
-
+        LLAMA_LOG_WARN("%d: xuezhiyuan mmap is \n", use_mmap);
         this->use_mmap = use_mmap;
         this->check_tensors = check_tensors;
     }

@@ -67,7 +67,7 @@ import com.example.llama.ui.navigation.navigate2
 
 
 
-const val appTitle = "LlamaCPP"
+const val appTitle = "Engine"
 
 @Composable
 fun MainApp(filesDir: String) {

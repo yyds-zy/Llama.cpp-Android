@@ -37,6 +37,7 @@ import androidx.navigation.NavHostController
 import com.example.llama.ui.components.dialog.DeleteConversationDialog
 import kotlinx.coroutines.launch
 import com.example.llama.ui.navigation.Routes
+import com.example.llama.ui.navigation.navigate2
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -63,7 +64,7 @@ fun AppDrawer(
                             modifier = Modifier.align(Alignment.CenterVertically),
                             onClick = {
                                 // Launch settings
-                                navController.navigate(Routes.SETTINGS)
+                                navController.navigate2(Routes.SETTINGS)
 
                                 // Close drawer
                                 coroutineScope.launch {

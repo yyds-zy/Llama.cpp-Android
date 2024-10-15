@@ -1,5 +1,6 @@
 package com.example.llama.ui.screens
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,7 @@ import com.example.llama.data.LMProperties
 import com.example.llama.ui.components.dialog.ModelCopyDialog
 import com.example.llama.ui.components.settings.ModelCard
 
+@SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewModelScreen(navController: NavHostController?) {

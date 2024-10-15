@@ -35,7 +35,7 @@ import com.example.llama.ui.components.dialog.ModelCopyDialog
 import com.example.llama.ui.components.settings.Dropdown
 import com.example.llama.ui.components.settings.ModelCard
 import com.example.llama.ui.components.settings.ModelChooser
-import com.example.llama.ui.theme.data.AvailableModels
+import com.example.llama.data.AvailableModels
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.UUID

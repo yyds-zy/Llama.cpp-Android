@@ -54,7 +54,7 @@ import com.example.llama.ui.components.AppDrawer
 import com.example.llama.ui.components.dialog.SaveConversationDialog
 import com.example.llama.ui.components.message.TextResponse
 import com.example.llama.ui.navigation.Routes
-import com.example.llama.ui.theme.data.AvailableModels
+import com.example.llama.data.AvailableModels
 import com.example.llama.util.ChatMLUtil
 import com.example.llama.util.deleteConversation
 import com.example.llama.util.getAvailableConversations
@@ -63,6 +63,7 @@ import com.example.llama.util.saveConversation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.example.llama.ui.navigation.navigate2
 
 
 
@@ -358,7 +359,7 @@ fun AppView(filesDir: String = "") {
                                 ) {
                                     TextButton(
                                         onClick = {
-                                            navController.navigate(Routes.ADD_MODEL)
+                                            navController.navigate2(Routes.ADD_MODEL)
                                         },
                                     ) {
                                         Icon(Icons.Default.Add, "Add model")

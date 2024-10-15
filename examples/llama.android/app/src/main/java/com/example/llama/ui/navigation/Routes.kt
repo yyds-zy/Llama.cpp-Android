@@ -2,7 +2,7 @@ package com.example.llama.ui.navigation
 
 import androidx.navigation.NavController
 
-fun NavController.navigate(route: Routes) = navigate(route.path)
+fun NavController.navigate2(route: Routes) = navigate(route.path)
 
 enum class Routes(val path: String) {
     HOME("home"),

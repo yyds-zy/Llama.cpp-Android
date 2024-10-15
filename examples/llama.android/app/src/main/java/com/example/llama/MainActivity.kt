@@ -7,7 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.example.llama.data.AppSettings
 import com.example.llama.ui.screens.MainApp
 import com.example.llama.ui.theme.LocalLMTheme
-import com.example.llama.ui.theme.data.AvailableModels
+import com.example.llama.data.AvailableModels
 
 
 //import org.samo_lego.locallm.voice.TTSEngine

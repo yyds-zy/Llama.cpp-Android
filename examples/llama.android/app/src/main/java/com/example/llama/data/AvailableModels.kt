@@ -1,8 +1,7 @@
-package com.example.llama.ui.theme.data
+package com.example.llama.data
 
 import android.content.Context
 import android.util.Log
-import com.example.llama.data.LMProperties
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

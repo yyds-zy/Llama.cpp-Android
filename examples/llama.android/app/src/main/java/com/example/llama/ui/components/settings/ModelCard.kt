@@ -38,7 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.llama.data.LMProperties
-import com.example.llama.ui.theme.data.AvailableModels
+import com.example.llama.data.AvailableModels
 
 
 @Composable

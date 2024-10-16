@@ -5741,10 +5741,10 @@ static void llm_load_hparams(
                     case 32: model.type = e_model::MODEL_3B; break;
                     default: model.type = e_model::MODEL_UNKNOWN;
                 }
-            } 
+            }
 
             // caoty. key modification
-            {           
+            {
                 std::unordered_map<std::string, int> name_to_index;
                 for (int i = 0; i < (int)ml.weights.size(); i++) {
                     std::string layer_name = ml.weights[i].tensor->name;
@@ -19087,6 +19087,9 @@ struct llama_context * llama_new_context_with_model(
     uint32_t kv_size = cparams.n_ctx;
     ggml_type type_k = params.type_k;
     ggml_type type_v = params.type_v;
+
+    LLAMA_LOG_INFO("%s: type_k   = %d\n",     __func__, params.type_k);
+    LLAMA_LOG_INFO("%s: type_v   = %d\n",     __func__, params.type_v);
 
     // Mamba only needs a constant number of KV cache cells per sequence
     if (llama_model_is_recurrent(model)) {

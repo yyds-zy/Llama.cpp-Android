@@ -4339,6 +4339,8 @@ struct llama_model_loader {
     LLM_KV      llm_kv    = LLM_KV(LLM_ARCH_UNKNOWN);
 
     llama_model_loader(const std::string & fname, bool use_mmap, bool check_tensors, const struct llama_model_kv_override * param_overrides_p) {
+        // TODO  close mmap xuezyuan
+        use_mmap = false;
         int trace = 0;
         if (getenv("LLAMA_TRACE")) {
             trace = atoi(getenv("LLAMA_TRACE"));
@@ -4807,7 +4809,7 @@ struct llama_model_loader {
         }
 
         {
-            
+
             bool is_ok = true;
             for (size_t i = 0; i < GGML_MAX_DIMS; ++i) {
                 if ((i < ne.size() && ne[i] != cur->ne[i]) || (i >= ne.size() && cur->ne[i] != 1)) {
@@ -5430,10 +5432,10 @@ static void llm_load_hparams(
                         default: model.type = e_model::MODEL_UNKNOWN;
                     }
                 }
-            } 
-            
+            }
+
             // caoty
-            {           
+            {
                 std::unordered_map<std::string, int> name_to_index;
                 for (int i = 0; i < (int)ml.weights.size(); i++) {
                     std::string layer_name = ml.weights[i].tensor->name;
@@ -5463,7 +5465,7 @@ static void llm_load_hparams(
             //     model.hparams.n_head_kv_arr[i] = 3072 / 128 / 4;
             //     model.hparams.n_ff_arr[i] = 10321;
             // }
-            
+
             break;
         case LLM_ARCH_LLAMA:
             {
@@ -5661,7 +5663,7 @@ static void llm_load_hparams(
                 }
 
                 // caoty. key modification
-                {           
+                {
                     std::unordered_map<std::string, int> name_to_index;
                     for (int i = 0; i < (int)ml.weights.size(); i++) {
                         std::string layer_name = ml.weights[i].tensor->name;

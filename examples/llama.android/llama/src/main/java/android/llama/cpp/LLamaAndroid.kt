@@ -3,9 +3,6 @@ package android.llama.cpp
 import android.util.Log
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.asCoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import java.util.concurrent.Executors
 import kotlin.concurrent.thread
@@ -36,7 +33,7 @@ class LLamaAndroid {
         }
     }.asCoroutineDispatcher()
 
-    private val nlen: Int = 64
+    private val nlen: Int = 128
 
     private external fun log_to_android()
     private external fun load_model(filename: String): Long
@@ -91,7 +88,7 @@ class LLamaAndroid {
         }
     }
 
-    suspend fun load(pathToModel: String, function: () -> Unit) {
+    suspend fun load(pathToModel: String, onLoaded: () -> Unit) {
         withContext(runLoop) {
             when (threadLocalState.get()) {
                 is State.Idle -> {
@@ -109,28 +106,48 @@ class LLamaAndroid {
 
                     Log.i(tag, "Loaded model $pathToModel")
                     threadLocalState.set(State.Loaded(model, context, batch, sampler))
+                    onLoaded()
                 }
                 else -> throw IllegalStateException("Model already loaded")
             }
         }
     }
 
-    fun send(message: String): Flow<String> = flow {
-        when (val state = threadLocalState.get()) {
-            is State.Loaded -> {
-                val ncur = IntVar(completion_init(state.context, state.batch, message, nlen))
-                while (ncur.value <= nlen) {
-                    val str = completion_loop(state.context, state.batch, state.sampler, nlen, ncur)
-                    if (str == null) {
-                        break
+    suspend fun send(message: String, onMessage: (String) -> Boolean, onEnd: () -> Unit) {
+        withContext(runLoop) {
+            when (val state = threadLocalState.get()) {
+                is State.Loaded -> {
+                    val ncur = IntVar(completion_init(state.context, state.batch, message, nlen))
+                    while (true) {
+                        val str = completion_loop(state.context, state.batch, state.sampler, nlen, ncur) ?: break
+                        if (!onMessage(str)) {
+                            break
+                        }
                     }
-                    emit(str)
+                    kv_cache_clear(state.context)
+                    onEnd()
                 }
-                kv_cache_clear(state.context)
+                else -> {}
             }
-            else -> {}
         }
-    }.flowOn(runLoop)
+    }
+
+//    fun send(message: String): Flow<String> = flow {
+//        when (val state = threadLocalState.get()) {
+//            is State.Loaded -> {
+//                val ncur = IntVar(completion_init(state.context, state.batch, message, nlen))
+//                while (ncur.value <= nlen) {
+//                    val str = completion_loop(state.context, state.batch, state.sampler, nlen, ncur)
+//                    if (str == null) {
+//                        break
+//                    }
+//                    emit(str)
+//                }
+//                kv_cache_clear(state.context)
+//            }
+//            else -> {}
+//        }
+//    }.flowOn(runLoop)
 
     /**
      * Unloads the model and frees resources.

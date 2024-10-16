@@ -27,7 +27,7 @@ class LMHolder {
             if (currentModelProperties != null) {
                 CoroutineScope(Dispatchers.Default).launch {
                     Log.d("xuezhiyuan question:= ", question);
-                    LLamaAndroid.instance().send(question)
+                    LLamaAndroid.instance().send(question, onSuggestion, onEnd)
                 }
             } else {
                 suggestQueue.add(Suggestion(question, onSuggestion, onEnd))

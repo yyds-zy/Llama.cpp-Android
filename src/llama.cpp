@@ -4339,7 +4339,8 @@ struct llama_model_loader {
     LLM_KV      llm_kv    = LLM_KV(LLM_ARCH_UNKNOWN);
 
     llama_model_loader(const std::string & fname, bool use_mmap, bool check_tensors, const struct llama_model_kv_override * param_overrides_p) {
-//        use_mmap = false;  close mmap
+        // todo  close mmap zhiyuan
+        use_mmap = false;
         int trace = 0;
         if (getenv("LLAMA_TRACE")) {
             trace = atoi(getenv("LLAMA_TRACE"));

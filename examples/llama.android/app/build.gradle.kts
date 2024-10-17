@@ -5,6 +5,22 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        getByName("debug") {
+            storeFile =
+                file("/home/zhiyuan/WorkSpace_SueZhiYuan/llama.cpp/llama.cpp/examples/llama.android/app/llamacpp.jks")
+            storePassword = "136039"
+            keyAlias = "llamacpp"
+            keyPassword = "136039"
+        }
+        create("release") {
+            storeFile =
+                file("/home/zhiyuan/WorkSpace_SueZhiYuan/llama.cpp/llama.cpp/examples/llama.android/app/llamacpp.jks")
+            storePassword = "136039"
+            keyAlias = "llamacpp"
+            keyPassword = "136039"
+        }
+    }
     namespace = "com.example.llama"
     compileSdk = 34
 

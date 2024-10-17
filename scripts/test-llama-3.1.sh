@@ -1,25 +1,43 @@
 gross_pruned_ratio=0.2
-pruning_ratio=0.6
+pruning_ratio=0.25
 begin_pruned_layer=4
 end_pruned_layer=30
 base_model=/data2/xmwang/raw_model/llama3.1_8B
 work_dir=/data2/ericao
-file_name=llama_3.1_${gross_pruned_ratio}_${begin_pruned_layer}-${end_pruned_layer}
+file_name=llama_3.1_${gross_pruned_ratio}_${begin_pruned_layer}-${end_pruned_layer}_combined_dataset
 
-# # 剪枝
-# echo ----------------------------- pruning --------------------------
-# cd ${work_dir}/LLM-Pruner
-# CUDA_VISIBLE_DEVICES=2 python llama3_new.py \
-#       --base_model ${base_model} \
-#       --pruning_ratio $pruning_ratio \
-#       --block_wise \
-#       --block_mlp_layer_start $begin_pruned_layer --block_mlp_layer_end $end_pruned_layer \
-#       --block_attention_layer_start $begin_pruned_layer --block_attention_layer_end $end_pruned_layer \
-#       --pruner_type taylor \
-#       --device cpu \
-#       --eval_device cuda \
-#       --save_ckpt_log_name ${file_name} \
-#       --save_model
+# 将 HuggingFace 转换为 .gguf
+
+# cd ${work_dir}/llama.cpp
+# CUDA_VISIBLE_DEVICES=2 python convert_hf_to_gguf.py \
+# ${base_model} \
+# --outtype bf16 \
+# --outfile ${work_dir}/deployed-models/llama_3.1.gguf
+
+# # 推理
+# cd ${work_dir}/llama.cpp
+# # make clean
+# # make -j32
+# # make -j32 GGML_CUDA=1
+# ./llama-cli -m ${work_dir}/deployed-models/llama_3.1.gguf \
+#     -n 128 \
+#     -ngl 9999 \
+#     --prompt "你好"
+
+# 剪枝
+echo ----------------------------- pruning --------------------------
+cd ${work_dir}/LLM-Pruner
+CUDA_VISIBLE_DEVICES=2 python llama3_new.py \
+      --base_model ${base_model} \
+      --pruning_ratio $pruning_ratio \
+      --block_wise \
+      --block_mlp_layer_start $begin_pruned_layer --block_mlp_layer_end $end_pruned_layer \
+      --block_attention_layer_start $begin_pruned_layer --block_attention_layer_end $end_pruned_layer \
+      --pruner_type taylor \
+      --device cpu \
+      --eval_device cuda \
+      --save_ckpt_log_name ${file_name} \
+      --save_model
 
 # # 将 bin 转换成 HuggingFace
 # echo ----------------------------- converting bin to HuggingFace --------------------------
@@ -30,13 +48,13 @@ file_name=llama_3.1_${gross_pruned_ratio}_${begin_pruned_layer}-${end_pruned_lay
 #     --begin_pruned_layer $begin_pruned_layer \
 #     --end_pruned_layer $end_pruned_layer
 
-# 将 HuggingFace 转换为 .gguf
-echo ----------------------------- converting HuggingFace to gguf --------------------------
-cd ${work_dir}/llama.cpp
-CUDA_VISIBLE_DEVICES=2 python convert_hf_to_gguf.py \
-${work_dir}/convert/${file_name} \
---outtype bf16 \
---outfile ${work_dir}/deployed-models/${file_name}_test.gguf
+# # 将 HuggingFace 转换为 .gguf
+# echo ----------------------------- converting HuggingFace to gguf --------------------------
+# cd ${work_dir}/llama.cpp
+# CUDA_VISIBLE_DEVICES=2 python convert_hf_to_gguf.py \
+# ${work_dir}/convert/${file_name} \
+# --outtype bf16 \
+# --outfile ${work_dir}/deployed-models/${file_name}.gguf
 
 # # 推理
 # echo ----------------------------- reasoning about gguf --------------------------

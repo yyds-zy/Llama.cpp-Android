@@ -8,7 +8,7 @@ from __future__ import annotations
 # try:
 #     # 5678 is the default attach port in the VS Code debug configurations. Unless a host and port are specified, host defaults to 127.0.0.1
 #     print('wait debugger')
-#     debugpy.listen(("localhost", 31051))
+#     debugpy.listen(("localhost", 31052))
 #     print("Waiting for debugger attach")
 #     debugpy.wait_for_client()
 # except Exception as e:
@@ -1569,10 +1569,10 @@ class LlamaPrunedModel(Model):
         n_head = self.hparams["num_attention_heads"]
         n_kv_head = self.hparams.get("num_key_value_heads")
         print(f"需要变换的权重为:{name}")  # yhz
-        # if name.endswith(("q_proj.weight", "q_proj.bias")):
-        #     data_torch = LlamaModel.permute(data_torch, n_head, n_head)
-        # if name.endswith(("k_proj.weight", "k_proj.bias")):
-        #     data_torch = LlamaModel.permute(data_torch, n_head, n_kv_head)
+        if name.endswith(("q_proj.weight", "q_proj.bias")):
+            data_torch = LlamaModel.permute(data_torch, n_head, n_head)
+        if name.endswith(("k_proj.weight", "k_proj.bias")):
+            data_torch = LlamaModel.permute(data_torch, n_head, n_kv_head)
 
         # process the experts separately
         if name.find("block_sparse_moe.experts") != -1:

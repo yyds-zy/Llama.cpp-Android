@@ -1,5 +1,5 @@
-gross_pruned_ratio=0.5
-pruning_ratio=0.8
+gross_pruned_ratio=0.4
+pruning_ratio=0.64
 begin_pruned_layer=4
 end_pruned_layer=25
 base_model=/data2/xmwang/raw_model/qwen

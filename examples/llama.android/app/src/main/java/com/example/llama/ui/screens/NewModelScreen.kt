@@ -31,13 +31,15 @@ import androidx.navigation.NavHostController
 import com.example.llama.data.LMProperties
 import com.example.llama.ui.components.dialog.ModelCopyDialog
 import com.example.llama.ui.components.settings.ModelCard
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewModelScreen(navController: NavHostController?) {
-    // todo fix model name  MiniCPM-2B-dpo-fp16-gguf-Q4_K_M.gguf  qwen2_pruned_0.5_4-25.gguf   llama3.1-Q4_K_M-kvOverload.gguf  Qwen-7.6B-Q4_K_M.gguf
-    val lmProperties = LMProperties(name = "", modelPath = "/sdcard/Download/")
+    val lmProperties = LMProperties(name = "", modelPath = "")
     var showModelCopyDialog by remember { mutableStateOf(false) }
     var uri by remember { mutableStateOf<Uri?>(null) }
     var deleteFile = false
@@ -90,7 +92,7 @@ fun NewModelScreen(navController: NavHostController?) {
 
             Row {
                 ModelCard(
-                    pathState = mutableStateOf(uri?.path ?: "/sdcard/Download/"),
+                    pathState = mutableStateOf(uri?.path ?: ""),
                     modelProperties = lmProperties,
                     allowModel = { selectedUri ->
                         if (selectedUri != null) {
@@ -115,12 +117,15 @@ fun NewModelScreen(navController: NavHostController?) {
                         navController?.popBackStack()
                         // Add to available models
                         uri?.let { modelUri ->
-                            prepareAndRunModel(
-                                context,
-                                modelUri,
-                                lmProperties,
-                                deleteFile
-                            )
+                            val scope = CoroutineScope(Dispatchers.Main)
+                            scope.launch {
+                                prepareAndRunModel(
+                                    context,
+                                    modelUri,
+                                    lmProperties,
+                                    deleteFile
+                                )
+                            }
                         }
                     }
                 ) {

@@ -33,23 +33,23 @@ fun ModelCopyDialog(
                 Row {
                     Text("Model will be copied to the app's data directory. Continue?")
                 }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            deleteFileAfterCopy = !deleteFileAfterCopy
-                        }
-                ) {
-                    // Delete model checkbox
-                    Checkbox(
-                        checked = deleteFileAfterCopy,
-                        onCheckedChange = {
-                            deleteFileAfterCopy = it
-                        },
-                    )
-                    Text("Delete original file")
-                }
+//                Row(
+//                    verticalAlignment = Alignment.CenterVertically,
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .clickable {
+//                            deleteFileAfterCopy = !deleteFileAfterCopy
+//                        }
+//                ) {
+//                    // Delete model checkbox
+//                    Checkbox(
+//                        checked = deleteFileAfterCopy,
+//                        onCheckedChange = {
+//                            deleteFileAfterCopy = it
+//                        },
+//                    )
+//                    Text("Delete original file")
+//                }
             }
         },
         dismissButton = {

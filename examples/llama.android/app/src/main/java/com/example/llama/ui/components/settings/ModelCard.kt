@@ -104,6 +104,8 @@ fun ModelCard(
                 if (uri != null && uri.path != null && allowModel(uri)) {
                     // Update model path
                     path = uri.path!!
+                    modelName = uri?.lastPathSegment ?: "Unknown"
+                    modelProperties.name = modelName
                     modelProperties.modelPath = uri.path!!
                 }
             }

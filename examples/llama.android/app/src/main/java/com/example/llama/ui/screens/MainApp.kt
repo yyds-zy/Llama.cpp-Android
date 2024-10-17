@@ -1,5 +1,6 @@
 package com.example.llama.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -64,10 +65,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import com.example.llama.ui.navigation.navigate2
+import kotlinx.coroutines.Dispatchers
 
 
-
-const val appTitle = "Engine"
+const val appTitle = ""
 
 @Composable
 fun MainApp(filesDir: String) {
@@ -77,6 +78,7 @@ fun MainApp(filesDir: String) {
 val modelLoadedState = mutableStateOf(false)
 val modelAvailableState = mutableStateOf(false)
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
@@ -173,6 +175,12 @@ fun AppView(filesDir: String = "") {
             composable(Routes.SETTINGS.path) { Settings(navController) }
             composable(Routes.ADD_MODEL.path) { NewModelScreen(navController) }
             composable(Routes.HOME.path) {
+                val titleState = remember { mutableStateOf(appTitle) }
+
+                fun updateTitle(newTitle: String) {
+                    titleState.value = newTitle
+                }
+
                 Scaffold(
                     topBar = {
                         CenterAlignedTopAppBar(
@@ -182,7 +190,7 @@ fun AppView(filesDir: String = "") {
                             ),
                             title = {
                                 Text(
-                                    text = appTitle,
+                                    text = titleState.value,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis
                                 )
@@ -340,6 +348,14 @@ fun AppView(filesDir: String = "") {
                             verticalArrangement = Arrangement.Center,
                         ) {
                             if (modelAvailable) {
+                                // TODO fixed title no show
+                                val scope = CoroutineScope(Dispatchers.Main)
+                                scope.launch {
+                                    val name = LMHolder.currentModel()?.name
+                                    if (name != null) {
+                                        updateTitle(name)
+                                    }
+                                }
                                 Text("Waiting for model to load ...")
 
                                 CircularProgressIndicator(

@@ -105,6 +105,8 @@ fun ModelCard(
                     // Update model path
                     path = uri.path!!
                     modelProperties.modelPath = uri.path!!
+                    modelName = uri.lastPathSegment!!
+                    modelProperties.name = modelName
                 }
             }
         )

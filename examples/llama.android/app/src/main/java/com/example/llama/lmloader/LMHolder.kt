@@ -42,6 +42,7 @@ class LMHolder {
                     question.onEnd,
                 )
             }
+            Log.d("xuezhiyuan", "model load success")
         }
 
         suspend fun currentModel(): LMProperties? {

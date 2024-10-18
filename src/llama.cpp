@@ -4578,6 +4578,8 @@ struct llama_model_loader {
         }
 
         this->use_mmap = use_mmap;
+        LLAMA_LOG_WARN("%s: mmap is not supported on this platform\n", __func__);
+        LLAMA_LOG_INFO("%s: mmap     = %d\n",     "llama_new_context_with_model", use_mmap);
         this->check_tensors = check_tensors;
     }
 
